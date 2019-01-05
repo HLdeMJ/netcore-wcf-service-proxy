@@ -10,11 +10,16 @@ namespace WcfServiceProxy
 {
     public class CountryServiceWrapper : ICountryServiceWrapper
     {
-        private readonly WcfProxy<ICountryService> clientProxy;
+        private readonly IWcfProxy<ICountryService> clientProxy;
 
         public CountryServiceWrapper(string endpointUrl)
         {
-            clientProxy = new WcfProxy<ICountryService>(endpointUrl);
+            clientProxy = new WcfProxy<ICountryServiceChannel>(endpointUrl);
+        }
+
+        public CountryServiceWrapper(IWcfProxy<ICountryServiceChannel> proxy)
+        {
+            clientProxy = proxy;
         }
 
         public IEnumerable<Country> GetCountries()
